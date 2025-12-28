@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -14,12 +14,7 @@ interface PageHeaderProps {
   searchPlaceholder?: string
 }
 
-export function PageHeader({ 
-  title, 
-  subtitle, 
-  backgroundImage,
-  searchPlaceholder = "Search..."
-}: PageHeaderProps) {
+function HeaderSearchBar({ placeholder }: { placeholder: string }) {
   const [query, setQuery] = useState("")
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -41,6 +36,34 @@ export function PageHeader({
     router.push(`?${params.toString()}`)
   }
 
+  return (
+    <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-2 pl-6 rounded-full flex items-center gap-2 shadow-2xl group focus-within:bg-white/15 transition-colors">
+      <Search className="size-5 text-white/70 group-focus-within:text-teal-400" />
+      <Input 
+        type="text" 
+        placeholder={placeholder}
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+        className="border-none bg-transparent h-12 text-white placeholder:text-white/60 focus-visible:ring-0 focus-visible:ring-offset-0 text-lg"
+      />
+      <Button 
+          size="lg" 
+          onClick={handleSearch}
+          className="rounded-full bg-teal-500 hover:bg-teal-400 text-white px-8 h-12"
+      >
+        Search
+      </Button>
+    </div>
+  )
+}
+
+export function PageHeader({ 
+  title, 
+  subtitle, 
+  backgroundImage,
+  searchPlaceholder = "Search..."
+}: PageHeaderProps) {
   return (
     <div className="relative h-[60vh] min-h-[500px] flex items-center justify-center overflow-hidden">
       {/* Background */}
@@ -64,24 +87,9 @@ export function PageHeader({
 
         {/* Search Bar */}
         <div className="max-w-2xl mx-auto animate-in slide-in-from-bottom-8 fade-in duration-1000 delay-300">
-          <div className="bg-white/10 backdrop-blur-xl border border-white/20 p-2 pl-6 rounded-full flex items-center gap-2 shadow-2xl group focus-within:bg-white/15 transition-colors">
-            <Search className="size-5 text-white/70 group-focus-within:text-teal-400" />
-            <Input 
-              type="text" 
-              placeholder={searchPlaceholder}
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-              className="border-none bg-transparent h-12 text-white placeholder:text-white/60 focus-visible:ring-0 focus-visible:ring-offset-0 text-lg"
-            />
-            <Button 
-                size="lg" 
-                onClick={handleSearch}
-                className="rounded-full bg-teal-500 hover:bg-teal-400 text-white px-8 h-12"
-            >
-              Search
-            </Button>
-          </div>
+          <Suspense fallback={<div className="h-16 w-full bg-white/5 rounded-full animate-pulse" />}>
+            <HeaderSearchBar placeholder={searchPlaceholder} />
+          </Suspense>
         </div>
       </div>
     </div>
