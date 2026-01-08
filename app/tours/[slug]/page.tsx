@@ -65,7 +65,7 @@ export default function TourDetail({ params }: { params: Promise<{ slug: string 
   return (
     <div className="min-h-screen bg-transparent pb-20">
       {/* Hero */}
-      <div className="relative h-[60vh] w-full overflow-hidden">
+      <div className="relative h-[50vh] md:h-[60vh] w-full overflow-hidden">
         <img
           src={tour.image}
           alt={tour.title}
@@ -85,22 +85,22 @@ export default function TourDetail({ params }: { params: Promise<{ slug: string 
                       <Users className="size-3.5" /> {tour.groupSize || "Small Group"}
                   </span>
               </div>
-              <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">{tour.title}</h1>
+              <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6 tracking-tight">{tour.title}</h1>
           </div>
         </div>
       </div>
 
-       <div className="container mx-auto px-4 -mt-20 relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+       <div className="container mx-auto px-4 -mt-16 md:-mt-20 relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
               {/* Overview Card */}
-              <div className="bg-[#0a0a0a]/90 border border-white/10 rounded-3xl p-8 backdrop-blur-xl shadow-2xl">
+              <div className="bg-[#0a0a0a]/90 border border-white/10 rounded-3xl p-6 md:p-8 backdrop-blur-xl shadow-2xl">
                   <h2 className="text-2xl font-bold text-white mb-4">Tour Overview</h2>
-                  <p className="text-lg text-white/70 leading-relaxed font-light mb-6">
+                  <p className="text-base md:text-lg text-white/70 leading-relaxed font-light mb-6">
                       {tour.description}
                   </p>
                   
-                  <div className="grid grid-cols-2 gap-4 pt-6 border-t border-white/10">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-white/10">
                       <div>
                           <p className="text-white/40 text-sm uppercase tracking-wider mb-1">Route</p>
                           <p className="text-white/90 font-medium">{tour.route?.join(" → ")}</p>
@@ -113,9 +113,9 @@ export default function TourDetail({ params }: { params: Promise<{ slug: string 
               </div>
 
                {/* Inclusions */}
-              <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+              <div className="bg-white/5 border border-white/10 rounded-3xl p-6 md:p-8">
                   <h3 className="text-xl font-bold text-white mb-6">What's Included</h3>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-4 gap-x-8">
                       {tour.inclusions.map((inc: string, i: number) => (
                           <div key={i} className="flex items-center gap-3">
                               <CheckCircle2 className="size-5 text-teal-500 shrink-0" />
@@ -126,13 +126,13 @@ export default function TourDetail({ params }: { params: Promise<{ slug: string 
               </div>
               
               {/* Itinerary */}
-               <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
+               <div className="bg-white/5 border border-white/10 rounded-3xl p-6 md:p-8">
                    <h3 className="text-xl font-bold text-white mb-6">Itinerary</h3>
                    <div className="space-y-8">
                        {tour.itinerary.map((day: any, i: number) => (
-                           <div key={i} className="flex gap-6">
-                               <div className="w-16 shrink-0 pt-1">
-                                   <span className="text-teal-400 font-bold text-sm block">{day.day}</span>
+                           <div key={i} className="flex flex-col sm:flex-row gap-2 sm:gap-6">
+                               <div className="w-full sm:w-16 shrink-0 pt-1">
+                                   <span className="text-teal-400 font-bold text-lg sm:text-sm block">{day.day}</span>
                                </div>
                                <div>
                                    <h4 className="text-lg font-semibold text-white mb-2">{day.title}</h4>

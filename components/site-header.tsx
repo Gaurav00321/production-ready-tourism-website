@@ -184,10 +184,12 @@ export default function SiteHeader() {
           </DropdownMenu>
 
           {/* User Account */}
-          <Button variant="ghost" size="icon" className="hidden md:flex">
-            <User className="size-5" />
-            <span className="sr-only">Account</span>
-          </Button>
+          <Link href="/auth">
+            <Button variant="ghost" size="icon" className="hidden md:flex">
+              <User className="size-5" />
+              <span className="sr-only">Account</span>
+            </Button>
+          </Link>
 
           <AnimatedButton className="hidden md:inline-flex">Book Now</AnimatedButton>
 
